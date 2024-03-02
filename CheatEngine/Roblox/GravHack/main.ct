@@ -83,7 +83,6 @@ function UDF1_CEButton1Click(sender)
   else
     setjp(prefix..grav)
   end
-  print('ss')
 end
 function UDF1_Edit1Enter(sender)
   prefix = sender.Text
