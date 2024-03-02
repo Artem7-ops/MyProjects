@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">*mF:H8#fdkk7UiriW55q;bQvkF5EUQT-8/z6zIma6sr}?$AYCMh+6-RXE,*^6e)}hTk:Pwi,*4Vzvw6Q54tV7=7FL7(P(fkLVzv]10K%hkUZz]:-(I.x=!^$*kCXQIjsuW(3@y9dX%jbPno6M8KG?oW(SoYEzvVetFNi6e0W[yaTL8F6}UDh%zAW+T]InlqTf3zhU0QyDZxu=C#;h:G9%p0KNyW*Vb(+@KaE0JNSDZ)BY03q-kNI2h=TnzUJ6dE3hpT=crJu;ufizdDn)U?-V.:-6}Tne=)OXv;)5C+,q@{*q_vCE!CDod7Q:bVa?cF1Dw5Z9qtiCMpg9Z[fmb{d.6T;8.IO(Vu@#Ayf7G8:B+BWT*hqQ@L/Sm@RVwPgLn9C3MU/]R5i7VFD]?Uy(nQ;9C,E0B0?TF:*Ry;$sv,])M5V),*D1$7tC7a$3.T=*UTfGRR@C?H$nX{#Dd/:^e+a#nZuu$;6!I]+DWk2BQ3CiV4Bl@G2{)A7ajSvab}4J[Eqr}U?5MBXS*QecXCdLa8{WpT5rGCrcwf]X^BFeF]NLR9Y/zLb.}rcncx?O):Tj+yO:ZO{Y?kxd+M!.eGrqE]gvwTUAGP;CK2MS40OvR8ybv7_TFM=+CZ8%BZJ13qd;m:BTk{E@$OTIxVB9%CN*C{EfrELd+4tPu@LU_H?850o@J)h0]LaD+S}jqNP7_jtRjc{6#4z*lF-7r+OX7$wz.cO.]T.?52%PzC5dm1LMo/wW[:e}Z;Gss^DHjTWr%U)sDvxp)4Mks}o,KU{6ekrrSg6o^3MNiDJ3Bi?^u}eLgtr0IiVaHpn72usK0;ihxgv5InKRiI8K}UKv8_t;qPa$Rp4{u2Qj{Dtk%wV(oCV]{$!4-dC%iP?l@J$A6H^?P@?6fs=$ou$KkDk#t@T4[Mm}]QF]ZOO$fa$n0wg?7e1fp,g6o2VDIpQ^VmG2sk$=^q?kY_mYJG7zrgeB*bQav2f_REdU$}/OQ=Mb1Pp@rB.gmhpLVNr[Sk3pDxs02#k)/o(+CRV@*klYGqMGD/Z/)pLV1o{d+E+PM*FBkcnuW,^_0G6x6B,H%8[]Ev2gess2[m[4jSDmKUvVY+d2uCq:SJ2EhmZ@ktGEMu8um$Fi7I8xep2x%bDQ+z?@)=9yVS@/J=uch%uP%.eMx!eOh_eMq%pJZJ2HSo%SiZD?bT:((@ajT%zpZC.#dqom9@[QOe1KC5JSr,x-n@qvVg4JeLTJ+Zp4BHk#*,6xiZlynI^vC)oadFRIOHxxs6c]I-wd@c3[)8dK=s,3edNMmE0y1x1ogSX.:sA]=-fc95Nm_gBXW}X+}9F-$:^Pc3ghOj1W$2L}bsFo!SuPuDupTG*8-).4WkQRl[KN@C}]ZI%P4*hl6V_h@yAyv{$cfw%bsB$(uh,3eOwaEy+NT3+9!eKCQlmJ0e9GT3.KLhL2)y5=rMyz6]b8oc/-s,L;RC$p(US#^Wf%#+S^{YJYJHQ/}q#ZUjp70[3qFs:Y*fwaf6N[R[8E%:![wCd{xGcl0V;E#0eFb0m5.x5c9_=oXy#yvCG1#:i</UDF1>
+  </Forms>
+  <CheatEntries/>
+  <UserdefinedSymbols/>
+  <LuaScript>local prefix = "?"
+local notRan = true
+local form
+local working = true
+local FoundList = createFoundList(createMemScan())
+local scanOption = soExactValue
+local varType = vtString
+local roundingType = rtRounded
+local input1 = prefix.."33DC"
+local input2 = ""
+local startAddress = "00000000000000030"
+local stopAddress  = "00007ffffffffff34"
+local protectionFlags = "rwx"
+local alignmentType = fsmLastDigits
+local alignmentParam = "B7"
+local isHexadecimalInput = false
+local isNotABinaryString = false
+local isUnicodeScan = false
+local isCaseSensitive = true
+
+function UDF1_FormCreate(sender)
+  if notRan then
+    form = sender
+    local x
+    local m=createMemoryStream()
+    m.size=16
+
+    GrvToogle = createHotkey(toogleGravity, VK_Z)
+    LGSet = createHotkey(setLowGrav, VK_L)
+    HGSet = createHotkey(setHighGrav, VK_H)
+    NGSet = createHotkey(setNormGrav, VK_N)
+    Sf = createHotkey(StopFly, VK_P)
+    FastFallKB = createHotkey(FastFall, VK_M)
+
+    createThread(function()
+      local left = 0
+      local top = 0
+      while working do
+        x=findWindow(nil,'Roblox')
+        if executeCodeLocalEx('GetWindowRect',x,m.Memory) then
+          m.Position=0
+          local left=m.readDword()
+          local top=m.readDword()
+          control_setPosition(sender,left+380,top+75)
+        end
+        sleep(1)
+      end
+    end)
+    notRan = false
+  end
+end
+
+function setjp(jp)
+    for i=0,FoundList.Count-1 do
+        writeString(FoundList.Address[i],jp);
+    end
+end
+
+local grav = "33DC"
+local gravs = {"33DB", "33DD", "33DC"}
+local noGrav = false
+
+function UDF1_CECheckbox2Change(sender)
+  if sender.Checked then
+    setjp(prefix.."33D0")
+  else
+    setjp(prefix..grav)
+  end
+  noGrav = sender.Checked
+end
+function UDF1_CEButton1Click(sender)
+  setjp(prefix.."33DF")
+  sleep(200)
+  if noGrav then
+    setjp(prefix.."33D0")
+  else
+    setjp(prefix..grav)
+  end
+  print('ss')
+end
+function UDF1_Edit1Enter(sender)
+  prefix = sender.Text
+end
+function UDF1_CERadioGroup1Click(sender)
+  grav = gravs[sender.ItemIndex + 1]
+  setjp(prefix..grav)
+end
+function UDF1_CEButton4Click(sender)
+  setjp(prefix.."33DC")
+  sleep(260)
+  setjp(prefix.."33D0")
+end
+function UDF1_CEButton3Click(sender)
+  control_setCaption(sender, "Scanning...")
+  local memScan = createMemScan(true)
+  memScan.setOnlyOneResult(false);
+  input1 = prefix.."33DC"
+  alignmentParam = form.Edit2.Text
+  memScan.firstScan(
+    scanOption,
+    varType,
+    roundingType,
+    input1,
+    input2,
+    startAddress,
+    stopAddress,
+    protectionFlags,
+    alignmentType,
+    alignmentParam,
+    isHexadecimalInput,
+    isNotABinaryString,
+    isUnicodeScan,
+    isCaseSensitive
+  )
+  memScan.waitTillDone();
+
+  FoundList=createFoundList(memScan);
+  FoundList.initialize();
+  control_setCaption(sender, "Rescan")
+end
+function UDF1_CEButton2Click(sender)
+  GrvToogle.destroy()
+  LGSet.destroy()
+  HGSet.destroy()
+  NGSet.destroy()
+  FastFallKB.destroy()
+  Sf.destroy()
+  working = false
+  form.close()
+end
+
+function setLowGrav()
+  grav = gravs[0]
+  form.RadioGroup1.ItemIndex = 0
+end
+
+function setHighGrav()
+  grav = gravs[1]
+  form.RadioGroup1.ItemIndex = 1
+end
+
+function setNormGrav()
+  grav = gravs[2]
+  form.RadioGroup1.ItemIndex = 2
+end
+
+function toogleGravity()
+  noGrav = not noGrav
+  form.Checkbox1.Checked = noGrav
+end
+
+function FastFall()
+  setjp(prefix.."33DF")
+  sleep(200)
+  if noGrav then
+    setjp(prefix.."33D0")
+  else
+    setjp(prefix..grav)
+  end
+end
+
+function StopFly()
+  setjp(prefix.."33DC")
+  sleep(260)
+  setjp(prefix.."33D0")
+end
+</LuaScript>
+</CheatTable>

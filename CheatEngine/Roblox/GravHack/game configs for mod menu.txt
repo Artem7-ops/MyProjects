@@ -1,0 +1,6 @@
+Game Name - prefix, Last 2 digits of the address.
+------------------
+Default - ? or @, B7 or 27(THE BEST is @, B7)
+Be a ball - D, B7
+The survival game = A, 27
+The Strongest Battlegrounds = ?, 27
