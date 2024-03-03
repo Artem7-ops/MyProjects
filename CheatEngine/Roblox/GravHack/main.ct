@@ -98,6 +98,8 @@ function UDF1_CEButton4Click(sender)
 end
 function UDF1_CEButton3Click(sender)
   control_setCaption(sender, "Scanning...")
+  form.Checkbox1.Checked = false
+  form.RadioGroup1.ItemIndex = 2
   local memScan = createMemScan(true)
   memScan.setOnlyOneResult(false);
   input1 = prefix.."33DC"
